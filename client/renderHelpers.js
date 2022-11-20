@@ -1,4 +1,4 @@
-import { fetchAllPlayers } from './ajaxHelpers';
+import { fetchAllPlayers, fetchSinglePlayer } from './ajaxHelpers';
 
 const playerContainer = document.getElementById('all-players-container');
 const newPlayerFormContainer = document.getElementById('new-player-form');
@@ -37,6 +37,8 @@ export const renderAllPlayers = (playerList) => {
   for (let i = 0; i < detailButtons.length; i++) {
     const button = detailButtons[i];
     button.addEventListener('click', async () => {
+      const singlePlayer = await fetchSinglePlayer(button.dataset.id)
+      renderSinglePlayer(singlePlayer)
       /*
         YOUR CODE HERE
       */
@@ -58,9 +60,7 @@ export const renderSinglePlayer = (playerObj) => {
       </div>
       <p>Team: ${playerObj.team ? playerObj.team.name : 'Unassigned'}</p>
       <p>Breed: ${playerObj.breed}</p>
-      <img src="${playerObj.imageUrl}" alt="photo of ${
-    playerObj.name
-  } the puppy">
+      <img src="${playerObj.imageUrl}" alt="photo of ${playerObj.name} the puppy">
       <button id="see-all">Back to all players</button>
     </div>
   `;
@@ -76,14 +76,33 @@ export const renderNewPlayerForm = () => {
       <label for="breed">Breed:</label>
       <input type="text" name="breed" />
       <button type="submit">Submit</button>
+      <button id="back"> Back </button>
+      
     </form>
   `;
   newPlayerFormContainer.innerHTML = formHTML;
 
   let form = document.querySelector('#new-player-form > form');
   form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    
+  const players = await fetchAllPlayers()
+  renderAllPlayers(players)
+
+  renderNewPlayerForm()
+  document.getElementById("back").addEventListener("click", event)
+  {
+    let playerData = { 
+    name: form.elements.name.value,
+    breed: form.elements.breed.value
+  }
+    history.back();
+    return playerData
+  }
+  
     /*
       YOUR CODE HERE
     */
   });
+
 };
