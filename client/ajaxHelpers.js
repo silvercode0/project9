@@ -38,6 +38,9 @@ try {
 export const addNewPlayer = async (playerObj) => {
   try { 
    const getResponse2 = await fetch(`${APIURL}/players/${playerObj}`)
+
+
+
    const result1 = await getResponse2.json();
    console.log("result", result1);
    if (result1.error) {
@@ -63,14 +66,7 @@ export const removePlayer = async (playerId) => {
        `Whoops, trouble removing player #${playerId} from the roster!`,
        err);
     }
-    let deleteButtons = [...document.getElementsByClassName('delete-button')];
-    for (let i = 0; i < deleteButtons.length; i++) {
-     const button =
-      deleteButtons[i];
-     button.addEventListener('click', async () => {
-       await removePlayer(button.dataset.id);
-       const players = await fetchAllPlayers();
-       renderAllPlayers(players);
-     });
-    } 
+    
 };
+
+
