@@ -1,5 +1,6 @@
 import { addNewPlayer, fetchAllPlayers, fetchSinglePlayer, removePlayer } from "./ajaxHelpers.js";
 
+
 const playerContainer = document.getElementById('all-players-container');
 const newPlayerFormContainer = document.getElementById('new-player-form');
 
@@ -74,6 +75,12 @@ export const renderSinglePlayer = (playerObj) => {
   `;
 
   playerContainer.innerHTML = pupHTML;
+  
+  const seeAllButton = document.getElementById("see-all");
+  seeAllButton.addEventListener("click", async () => {
+      const players = await fetchAllPlayers();
+      renderAllPlayers(players);
+    });
 };
 
 export const renderNewPlayerForm = () => {

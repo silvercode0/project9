@@ -4,6 +4,7 @@ const cohortName = '2209-FTB-ET-WEB-PT';
 const APIURL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}/`;
 
 
+
 export const fetchAllPlayers = async () => {
     try {
       const getResponse = await fetch(`${APIURL}players`);
@@ -38,9 +39,13 @@ try {
 export const addNewPlayer = async (playerObj) => {
   try { 
    const getResponse2 = await fetch(`${APIURL}/players/${playerObj}`)
-
-
-
+//   const getResponse2 = await fetch(`${APIURL}/players`, {
+//     method: "POST",
+//     headers: {
+//         "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(playerObj),
+// });
    const result1 = await getResponse2.json();
    console.log("result", result1);
    if (result1.error) {
@@ -63,7 +68,7 @@ export const removePlayer = async (playerId) => {
      return;
   } catch (err) {
      console.error(
-       `Whoops, trouble removing player #${playerId} from the roster!`,
+       `Whoops, trouble removing player ${playerId} from the roster!`,
        err);
     }
     
