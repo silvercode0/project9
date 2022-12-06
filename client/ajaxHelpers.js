@@ -7,7 +7,7 @@ const APIURL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}/`;
 
 export const fetchAllPlayers = async () => {
     try {
-      const getResponse = await fetch(`${APIURL}players`);
+      const getResponse = await fetch(`${APIURL}/players`);
       //getting all the players 
       const result = await getResponse.json();
       if (result.error) {
@@ -26,11 +26,9 @@ try {
   const getResponse1 = await fetch(`${APIURL}/players/${playerId}`);
   const theResult = await getResponse1.json();
   console.log('result',theResult);
-      if (theResult.error) {
-          throw theResult.error;
+      if (theResult.error) throw theResult.error;
           // throw creates a custom error that you can use 
-      }
-      return theResult.data.players;
+      return theResult.data.player;
     } catch (error) {
   console.error("can not get player id.", error)
 }
@@ -38,20 +36,19 @@ try {
 
 export const addNewPlayer = async (playerObj) => {
   try { 
-   const getResponse2 = await fetch(`${APIURL}/players/${playerObj}`)
-//   const getResponse2 = await fetch(`${APIURL}/players`, {
-//     method: "POST",
-//     headers: {
-//         "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(playerObj),
-// });
+  //  const getResponse2 = await fetch(`${APIURL}/players`)
+  const getResponse2 = await fetch(`${APIURL}/players`, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify(playerObj),
+});
    const result1 = await getResponse2.json();
-   console.log("result", result1);
-   if (result1.error) {
-    throw result1.error
-    }
-    return result1.data.player;
+  //  console.log("result", result1);
+   if (result1.error) throw result1.error
+    return;
+    // return result1.data.player;
   } catch (error) {
     console.error("can not add player.", error)
   }
@@ -68,7 +65,7 @@ export const removePlayer = async (playerId) => {
      return;
   } catch (err) {
      console.error(
-       `Whoops, trouble removing player ${playerId} from the roster!`,
+       `Whoops, trouble removing player from the roster!`,
        err);
     }
     

@@ -24,6 +24,7 @@ export const renderAllPlayers = (playerList) => {
         </div>
         <img src="${pup.imageUrl}" alt="photo of ${pup.name} the puppy">
         <button class="detail-button" data-id=${pup.id}>See details</button>
+        <button class="remove-button" data-id=${pup.id}>Remove from roster</button>
       </div>
     `;
     playerContainerHTML += pupHTML;
@@ -91,7 +92,6 @@ export const renderNewPlayerForm = () => {
       <label for="breed">Breed:</label>
       <input type="text" name="breed" />
       <button type="submit">Submit</button>
-      <button id="back"> Back </button>
       
     </form>
   `;
